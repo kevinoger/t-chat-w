@@ -15,9 +15,9 @@
             <h3><a href="<?php echo $this->url('default_home'); ?>" title="Revenir a l'accueil">Les salons</a></h3>
             <nav>
                 <ul id="menu-salons">
-                    
+                    <a class="button" href="<?php echo $this->url('users_list'); ?>" title="Liste des utilisateurs">Liste des utilisateurs</a>
+                    <a class="button" href="deconnexion.php" title="Se déconnecter de T'Chat">Déconnexion</a>
                 </ul>
-                <a href="deconnexion.php" title="Se déconnecter de T'Chat">Déconnexion</a>
             </nav>
         </aside><main>
 

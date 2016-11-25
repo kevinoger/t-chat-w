@@ -4,7 +4,7 @@
 
     <ul>
         <?php foreach($listUsers as $user): ?>
-        <li><?php echo $user; ?></li>
+        <li><?php echo $user['pseudo']; ?></li>
         <?php endforeach; ?>
     </ul>
 
