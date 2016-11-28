@@ -2,11 +2,10 @@
 
 namespace Controller;
 
-use \W\Controller\Controller;
 use Model\SalonsModel;
 use Model\MessagesModel;
 
-class SalonController extends Controller
+class SalonController extends BaseController
 {
 
 	/**
@@ -17,7 +16,7 @@ class SalonController extends Controller
         $salonsModel = new SalonsModel();
         $salon = $salonsModel->find($id);
         $messagesModel = new MessagesModel();
-        $messages = $messagesModel->search(array('id_salon'=>$id), 'OR', FALSE);
+        $messages = $messagesModel->searchAllWithUserinfo($id);
         
 		$this->show('salons/see', array('salon' => $salon,'messages' => $messages));
 	}

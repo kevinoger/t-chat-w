@@ -2,9 +2,7 @@
 
 namespace Controller;
 
-use \W\Controller\Controller;
-
-class TestController extends Controller
+class TestController extends BaseController
 {
 
 	/**

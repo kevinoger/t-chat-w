@@ -2,10 +2,9 @@
 
 namespace Controller;
 
-use \W\Controller\Controller;
 use Model\utilisateursModel;
     
-class UserController extends Controller
+class UserController extends BaseController
 {
     
     
