@@ -10,7 +10,7 @@
             <label for="pseudo">
                 Veuillez renseigner votre pseudo :
             </label>
-            <input type="text" name="pseudo" id="pseudo">
+            <input type="text" name="pseudo" id="pseudo" value="<?php echo isset($datas['pseudo']) ? $datas['pseudo'] : '' ?>">
 
         </p>
         <p>
