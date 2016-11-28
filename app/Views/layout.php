@@ -15,8 +15,11 @@
             <h3><a href="<?php echo $this->url('default_home'); ?>" title="Revenir a l'accueil">Les salons</a></h3>
             <nav>
                 <ul id="menu-salons">
-                    <a class="button" href="<?php echo $this->url('users_list'); ?>" title="Liste des utilisateurs">Liste des utilisateurs</a>
-                    <a class="button" href="deconnexion.php" title="Se déconnecter de T'Chat">Déconnexion</a>
+                   <?php foreach($salons as $salon) : ?>
+                    <li><a href="<?php echo $this->url('see_salon', array('id'=>$salon['id'])); ?>"><?php echo $this->e($salon['nom']); ?></a></li>
+                   <?php  endforeach; ?>
+                    <li><a class="button" href="<?php echo $this->url('users_list'); ?>" title="Liste des utilisateurs">Liste des utilisateurs</a></li>
+                    <li><a class="button" href="deconnexion.php" title="Se déconnecter de T'Chat">Déconnexion</a></li>
                 </ul>
             </nav>
         </aside><main>

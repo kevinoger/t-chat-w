@@ -26,7 +26,7 @@ class BaseController extends Controller
 				'w_user' 		  => $this->getUser(),
 				'w_current_route' => $app->getCurrentRoute(),
 				'w_site_name'	  => $app->getConfig('site_name'),
-				'salons'	      => $salonsModel->findAll(),
+				'salons'	      => $salonsModel->findAll()
 			]
 		);
     }
