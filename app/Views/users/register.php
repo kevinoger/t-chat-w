@@ -17,6 +17,9 @@ function afficherCheck($valeurAttendue){
 <?php $this->start('main_content') ?>
 
 <h2>Inscription d'utilisateur</h2>
+
+<?php $fmsg->display(); ?>
+
 <form action="<?php echo $this->url('register'); ?>" method="POST" enctype="multipart/form-data">
     <p>
         <!-- Pseudo, mdp, mail, avatar -->
@@ -53,4 +56,4 @@ function afficherCheck($valeurAttendue){
     </p>
 </form>
 
-<?php $this->stop('main_content') ?>
+<?php $this->stop('main_content'); ?>
