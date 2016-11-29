@@ -4,11 +4,14 @@ namespace Controller;
 
 use \W\Controller\Controller;
 use \Model\SalonsModel;
+use \Plasticbrain\FlashMessages\FlashMessages;
 
 class BaseController extends Controller
 {
 
 	protected $engine;
+    
+    protected $fmsg;
     
     public function __construct() {
         $this->engine = new \League\Plates\Engine(self::PATH_VIEWS);
@@ -18,6 +21,8 @@ class BaseController extends Controller
 		$app = getApp();
         
         $salonsModel = new SalonsModel();
+        
+        $this->fmsg = new FlashMessages();
 
 		// Rend certaines données disponibles à tous les vues
 		// accessible avec $w_user & $w_current_route dans les fichiers de vue
@@ -26,9 +31,12 @@ class BaseController extends Controller
 				'w_user' 		  => $this->getUser(),
 				'w_current_route' => $app->getCurrentRoute(),
 				'w_site_name'	  => $app->getConfig('site_name'),
-				'salons'	      => $salonsModel->findAll()
+				'salons'	      => $salonsModel->findAll(),
+                'fmsg'            => $this->getFlashMessenger()
 			]
 		);
+        
+        
     }
     
     
@@ -43,5 +51,9 @@ class BaseController extends Controller
     
     public function addGlobalData(array $datas) {
         $this->engine->addData($data);
+    }
+    
+    public function getFlashMessenger() {
+        return $this->fmsg;
     }
 }
