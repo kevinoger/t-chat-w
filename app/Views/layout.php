@@ -61,5 +61,10 @@
 			integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
 		crossorigin="anonymous"></script>
 		<script type="text/javascript" src="<?php echo $this->assetUrl('js/close-flash-messages.js') ?>"></script>
+		<?php $sectionJavascripts = $this->section('javascripts');
+                if(!empty($sectionJavascripts)) {
+                    echo $sectionJavascripts;
+                }
+        ?>
  	</body>
 </html>

@@ -19,13 +19,25 @@ class MessagesModel extends Model {
 	 * @param int $idSalon l'id du salon dont on souhaite récupérer les messages
 	 * @return array la liste des messages avec les infos utilisateur
 	 */
-	public function searchAllWithUserInfos($idSalon) {
+	public function searchAllWithUserInfos($idSalon, $idMessage = null) {
 		$query = "SELECT * FROM $this->table"
 				. " JOIN utilisateurs ON $this->table.id_utilisateur = utilisateurs.id"
 				. " WHERE id_salon = :id_salon";
-		
+        
+		$idMessageExists = $idMessage !== null && ctype_digit($idMessage);
+        
+        if($idMessageExists) {
+            $query .='AND messages.id > :id_message';
+        }
+        
 		$stmt = $this->dbh->prepare($query);
 		$stmt->bindParam(':id_salon', $idSalon, PDO::PARAM_INT);
+        
+        if($idMessageExists) {
+            $stmt->bindParam(':id_messages', $idMessage, PDO::PARAM_INT);
+        }
+        
+		
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}

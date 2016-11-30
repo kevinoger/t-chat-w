@@ -10,6 +10,7 @@
 		<!-- htmlentities va me permettre de me protéger contre l'injection de 
 			HTML dont script -->
 		<li>
+		    <span class="avatar"><img src="<?php echo $this->assetUrl('upload/'.$message['avatar']); ?>" alt=""></span>
 			<span class="personne"><?php echo $this->e($message['pseudo']); ?> : </span>
 			<span class="message">"<?php echo $this->e($message['corps']); ?>"</span></li>
 	<?php endforeach; ?>
@@ -28,3 +29,9 @@ t-chat-w/public/salon/$salon['id']
 <?php endif; ?>
 
 <?php $this->stop('main_content'); ?>
+
+<?php $this->start('javascripts'); ?>
+
+<script src="<?php echo $this->assetUrl('js/prepare-chat.js'); ?>"></script>
+
+<?php $this->stop('javascripts'); ?>

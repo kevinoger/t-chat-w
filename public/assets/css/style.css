@@ -104,6 +104,7 @@ main p {
     padding: 0;
     flex: 1;
     overflow-y: scroll;
+    height: calc(100vh - 187px);
 }
 
 .messages li {
@@ -153,4 +154,19 @@ form label {
     width: 15%;
 }
 
+.messages > li > * {
+	vertical-align: middle;
+}
 
+span.avatar {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+span.avatar img {
+    display: block;
+    max-width: 100%;
+}
