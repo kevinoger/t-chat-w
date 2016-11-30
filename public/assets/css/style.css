@@ -1,139 +1,156 @@
 html, body {
-	height: 100%;
+    height: 100%;
 }
 
 body {
-	font-family: arial, sans-serif;
-	background-color: #353535;
-	color: white;
-	text-shadow: 0 0 4px black;
-	height: 100%;
-	padding-top: 97px;
-	position: relative;
+    font-family: arial, sans-serif;
+    background-color: #353535;
+    color: white;
+    text-shadow: 0 0 4px black;
+    height: 100%;
+    padding-top: 97px;
+    position: relative;
 }
 
 header {
-	top: 0;
-	padding: 30px 20px;
-	background-color: #505050;
-	box-shadow: 0 0 5px #272727;
-	border-bottom: 1px solid #222;
-	z-index: 1000;
-	position: absolute;
-	width: 100%;
-	height: 97px;
+    top: 0;
+    padding: 30px 20px;
+    background-color: #505050;
+    box-shadow: 0 0 5px #272727;
+    border-bottom: 1px solid #222;
+    z-index: 1000;
+    position: absolute;
+    width: 100%;
+    height: 97px;
 }
 
 aside, main {
-	display: inline-block;
-	height: 100%;
-	vertical-align: top;
-	font-size: 0.85em;
+    display: inline-block;
+    height: 100%;
+    vertical-align: top;
+    font-size: 0.85em;
 }
 
 main {
-	padding: 15px;
-	width: calc(100% - 250px);
-	position: relative;
+    padding: 15px 0px 30px 15px;
+    width: calc(100% - 230px);
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
 }
-a {
-    text-decoration: none;
-}
+
 aside {
-	background-color: #444;
-	box-shadow: 0 0 5px #272727;
-	overflow: hidden;
-    width: 250px;
+    background-color: #444;
+    box-shadow: 0 0 5px #272727;
+    overflow: hidden;
+    width: 230px;
 }
 
 aside h3 {
-	padding: 10px;
-	text-align: center;
-	box-shadow: 0 0 4px #222;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 0 4px #222;
 }
 
 aside ul {
-	padding: 0;
-	margin: 0px;
+    padding: 0;
+    margin: 0px;
 }
 
 aside ul li {
-	list-style: none;
+    list-style: none;
 }
 
-aside ul li a, nav a {
-	text-decoration: none;
-	display: block;
-	padding: 10px 15px;
-	border-bottom: 1px solid #353535;
+aside ul li a {
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-bottom: 1px solid #353535;
 }
 
 aside ul li:last-child a{
-	border-bottom: none;
+    border-bottom: none;
 }
 
 aside ul li a:hover {
-	background-color: #555555;
+    background-color: #555555;
 }
 
 aside ul li a.selected {
-	background-color: #353535;
-	box-shadow: 0 0 5px black inset;
+    background-color: #353535;
+    box-shadow: 0 0 5px black inset;
 }
 
 main h2 {
-	padding: 10px 0;
-	font-size: 1.5em;
+    padding: 10px 0;
+    font-size: 1.5em;
 }
 
 main p {
-	margin: 15px 0;
+    margin: 15px 0;
 }
 
 .button {
-	text-decoration: none;
-	border: none;
-	padding: 5px;
-	background: gray;
-	border-radius: 5px;
-	box-shadow: 0 0 5px #222;
+    text-decoration: none;
+    border: none;
+    padding: 5px;
+    background: gray;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #222;
 }
 
 .messages {
-	margin: 0px;
+    margin: 0px;
+    padding: 0;
+    flex: 1;
+    overflow-y: scroll;
 }
 
 .messages li {
-	list-style: none;
-	margin: 15px 0;
+    list-style: none;
+    margin: 15px 0;
 }
 
 .messages li .personne {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 form input, form textarea {
-	color: white;
-	background : #252525;
-	box-shadow : 0 0 5px black inset;
-	border: 1px solid gray;
-	padding : 2px;
+    color: white;
+    background : #252525;
+    box-shadow : 0 0 5px black inset;
+    border: 1px solid gray;
+    padding : 2px;
 }
 
 .form-message {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	left: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
 }
 
 .form-message input, .form-message textarea {
-	vertical-align: middle;
-	height: 30px;
-	width: calc(100% - 90px);
+    vertical-align: middle;
+    height: 30px;
+    width: calc(100% - 90px);
 }
 
 .form-message input[type="submit"] {
-	border-radius: 0;
-	width: 90px;
+    border-radius: 0;
+    width: 90px;
 }
+
+form > p {
+    margin: 20px;
+}
+
+form > p > * {
+    display: inline-block;
+}
+
+form label {
+    width: 15%;
+}
+
+

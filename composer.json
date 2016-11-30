@@ -1,14 +1,14 @@
 {
     "name": "t-chat-w",
-    "description": "Framework pédagogique de la WebForce3",
+    "description": "Le version W du projet tchat",
     "version": "1.0.0",
     "minimum-stability": "dev",
     "license": "MIT",
     "prefer-stable": true,
     "authors": [
         {
-            "name": "Kevin Oger",
-            "email": "kevinoger@outlook.fr",
+            "name": "Thibault Truffert",
+            "email": "thibaulttruffert@hotmail.com",
             "role": "Lead Developer"
         }
     ],

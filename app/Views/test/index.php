@@ -2,6 +2,7 @@
 
 <?php $this->start('main_content'); ?>
 
-Hello test
+Hello test !!
 
 <?php $this->stop('main_content'); ?>
+
