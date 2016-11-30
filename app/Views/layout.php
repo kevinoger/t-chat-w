@@ -30,13 +30,19 @@
 								<?php echo $this->e($salon['nom']); ?></a> 
 						</li>
 					<?php endforeach; ?>
+					<?php if(in_array($w_user['role'], ['admin', 'superadmin'])): ?>
 					<li>
 						<a class="button" href="<?php echo $this->url('users_list'); ?>" title="Liste des utilisateurs">
 							Liste des utilisateurs
 						</a>
 					</li>
+					<?php endif; ?>
 					<li>
+					    <?php if($w_user): ?>
 						<a class="button" href="<?php echo $this->url('logout'); ?>" title="Se déconnecter de T'Chat">Déconnexion</a>
+						<?php else : ?>
+						<a class="button" href="<?php echo $this->url('login'); ?>" title="Acceder au formulaire de connection">Connexion</a>
+						<?php endif; ?>
 					</li>
 				</ul>
 
@@ -44,6 +50,7 @@
 		</aside><main>
 
 			<section>
+			    <?php $fmsg->display(); ?>
 				<?= $this->section('main_content') ?>
 			</section>
 		</main>

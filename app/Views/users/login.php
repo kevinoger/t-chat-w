@@ -24,7 +24,7 @@
 	</p>
 	<p>
 		<input type="submit" class="button" value="Me connecter"/>
-		<a class="button" href="#" title="Accéder à la page d'inscription">
+		<a class="button" href="<?php echo $this->url('register') ?>" title="Accéder à la page d'inscription">
 			Pas encore inscrit ?
 		</a>
 	</p>
