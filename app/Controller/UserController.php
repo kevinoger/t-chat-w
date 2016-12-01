@@ -5,7 +5,7 @@ namespace Controller;
 use Model\UtilisateursModel;
 use W\Security\AuthentificationModel;
 use \Respect\Validation\Validator as v;
-use \Respect\Validation\Exceptions\NestedValidationException;
+use \Respect\Validation\Exceptions\ValidationException;
 
 class UserController extends BaseController
 {
@@ -21,9 +21,9 @@ class UserController extends BaseController
 		 * Ici j'instancie depuis l'action du contrôleur un modèle d'utilisateurs
 		 * pour pouvoir accéder à la liste des utilisateurs
 		 */
-        
-        $this->allowTo(['admin', 'superadmin']);
-        
+		
+		$this->allowTo(['admin', 'superadmin']);
+		
 		$usersModel = new UtilisateursModel();
 		
 		$usersList = $usersModel->findAll();
@@ -67,6 +67,7 @@ class UserController extends BaseController
 					$auth->logUserIn($userInfos);
 					
 					// une fois l'utilisateur connecté, je le redirige vers l'accueil
+					$this->getFlashMessenger()->success('Vous vous êtes connecté avec succès !');
 					$this->redirectToRoute('default_home');
 				} else {
 					// les infos de connexion sont incorrectes, on avertit 
@@ -88,29 +89,42 @@ class UserController extends BaseController
 	}
 	
 	public function register() {
+		
+		$user = $this->getUser();
+		
+		$datas = $user ? $user : array();
+				
 		if( ! empty($_POST)) {
 			
 			// on indique à respect validation que nos règles de validation
 			// seront accessibles depuis le namespace Validation\Rules
 			v::with("Validation\Rules");
 			
-			$validators = array(
-				'pseudo' => v::length(3,50)
+			$pseudoValidator = v::length(3,50)
 					->alnum()
-					->noWhiteSpace()
-					->usernameNotExists()
-					->setName('Nom d\'utilisateur'),
+					->noWhitespace()
+					->setName('Nom d\'utilisateur');
+			
+			$emailValidator = v::email()
+					->setName('Email');
+			
+			if( ! $user) {
+				$pseudoValidator->usernameNotExists();
+				$emailValidator->emailNotExists();
+			}
+			
+			$validators = array(
+				'pseudo' => $pseudoValidator,
 				
-				'email' => v::email()
-					->emailNotExists()
-					->setName('Email'),
+				'email' => $emailValidator,
 				
 				'mot_de_passe' => v::length(3,50)
 					->alnum()
 					->noWhiteSpace()
 					->setName('Mot de passe'),
 				
-				'sexe' => v::in(array('femme', 'homme', 'non-défini')),
+				'sexe' => v::in(array('femme', 'homme', 'non-défini'))
+					->setName('Sexe'),
 				
 				'avatar' => v::optional(
 						v::image()
@@ -134,9 +148,19 @@ class UserController extends BaseController
 				$datas['avatar'] = '';
 			}
 			
+			// localisation rapide de mes messages d'erreur (devrait être déclaré 
+			// dans un fichier à part)
+			$trads = array(
+				'alnum' => '{{name}} ne doit contenir que des caractères alphanumériques',
+				'size' => '{{name}} doit avoir une taille comprise entre {{minSize}} et {{maxSize}}',
+				'upload' => '{{name}} n\'a pas été uploadé correctement',
+				'length' => '{{name}} doit avoir une longueur comprise entre {{minValue}} et {{maxValue}} caractères',
+				'noWhitespace' => '{{name}} ne doit pas contenir d\'espace vide',
+				'in' => '{{name}} doit être compris dans {{haystack}}',
+				'image' => '{{name}} doit être une image'
+			);
 			// je parcours la liste de mes validateurs en récupérant aussi le
 			// nom du champ en clé
-			
 			foreach ($validators as $field => $validator) {
 				// la méthode assert renvoie une exception de type NestedValidationException
 				// qui nous permet de récupérer le ou les messages d'erreur
@@ -145,10 +169,11 @@ class UserController extends BaseController
 					// on essaye de valider la donnée
 					// si une exception se produit, c'est le bloc catch qui sera
 					// exécuté
-					$validator->assert(isset($datas[$field]) ? $datas[$field] : '');
-				} catch (NestedValidationException $ex) {
-					$fullMessage = $ex->getFullMessage();
-					$this->getFlashMessenger()->error($fullMessage);
+					$validator->check(isset($datas[$field]) ? $datas[$field] : '');
+				} catch (ValidationException $ex) {
+					$ex->setTemplate($trads[$ex->getId()]);
+					$mainMessage = $ex->getMainMessage();
+					$this->getFlashMessenger()->error($mainMessage);
 				}
 			}
 			
@@ -174,7 +199,7 @@ class UserController extends BaseController
 					$avatarNewName = md5(time() . uniqid());
 
 					$targetPath = realpath('assets/uploads');
-
+					
 					move_uploaded_file($initialAvatarPath, $targetPath.'/'.$avatarNewName);
 
 					// on met à jour le nouveau nom de l'avatar dans $datas
@@ -188,16 +213,24 @@ class UserController extends BaseController
 				
 				unset($datas['send']);
 				
-				$userInfos = $utilisateursModel->insert($datas);
-				
-				$auth->logUserIn($userInfos);
-				
-				$this->getFlashMessenger()->success('Vous vous êtes bien inscrit à T\'Chat !');
+				if($user) {
+					$utilisateursModel->update($datas, $user['id']);
+					$auth = new AuthentificationModel();
+					$this->getFlashMessenger()->success('Vous avez bien mis à jour votre profil');
+					if( ! $auth->refreshUser()) {
+						$this->getFlashMessenger()->warning('Nous n\'avons pas été en mesure de vous reconnecter');
+					}
+				} else {
+					$this->getFlashMessenger()->success('Vous vous êtes bien inscrit à T\'Chat !');
+					$userInfos = $utilisateursModel->insert($datas);
+					$auth->logUserIn($userInfos);
+				}
 				
 				$this->redirectToRoute('default_home');
 			}
 		}
 		
-		$this->show('users/register');
+		$this->show('users/register',  array('datas' => $datas));
 	}
+
 }

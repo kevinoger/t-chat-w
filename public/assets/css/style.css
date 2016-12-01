@@ -32,7 +32,7 @@ aside, main {
 }
 
 main {
-    padding: 15px 0px 30px 15px;
+    padding: 15px 15px 30px;
     width: calc(100% - 230px);
     position: relative;
     display: inline-flex;
@@ -155,7 +155,7 @@ form label {
 }
 
 .messages > li > * {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 span.avatar {
@@ -164,9 +164,37 @@ span.avatar {
     height: 25px;
     border-radius: 999px;
     overflow: hidden;
+    margin-right: 20px;
 }
 
 span.avatar img {
     display: block;
     max-width: 100%;
 }
+
+.alert {
+	padding: 5px;
+	border-radius: 5px;
+	background: rgb(25,25,25);
+}
+
+.alert .close {
+	margin-right: 15px;
+	color: white;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.alert.alert-success {
+	background: green;
+}
+
+.alert.alert-danger {
+	background: red;
+}
+
+.alert.alert-warning {
+	background: yellow;
+}
+

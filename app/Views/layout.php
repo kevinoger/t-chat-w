@@ -30,6 +30,28 @@
 								<?php echo $this->e($salon['nom']); ?></a> 
 						</li>
 					<?php endforeach; ?>
+					
+					<?php if($w_user): ?>
+					<li>
+						<a class="button" href="<?php echo $this->url('add_salon') ?>">
+							Ajouter un nouveau salon
+						</a>
+					</li>	
+					<?php endif; ?>
+					
+					<li>
+						<?php if($w_user): ?>
+						<a class="button" href="<?php echo $this->url('profile') ?>">
+							Mon profil
+						</a>
+						<?php else: ?>
+						<a class="button" href="<?php echo $this->url('register') ?>">
+							S'inscrire à T'Chat
+						</a>
+						<?php endif; ?>
+					</li>	
+					
+						
 					<?php if(in_array($w_user['role'], ['admin', 'superadmin'])): ?>
 					<li>
 						<a class="button" href="<?php echo $this->url('users_list'); ?>" title="Liste des utilisateurs">
@@ -38,10 +60,18 @@
 					</li>
 					<?php endif; ?>
 					<li>
-					    <?php if($w_user): ?>
-						<a class="button" href="<?php echo $this->url('logout'); ?>" title="Se déconnecter de T'Chat">Déconnexion</a>
+						<?php if($w_user): ?>
+						<a class="button" 
+						   href="<?php echo $this->url('logout'); ?>" 
+						   title="Se déconnecter de T'Chat">
+							Déconnexion
+						</a>
 						<?php else : ?>
-						<a class="button" href="<?php echo $this->url('login'); ?>" title="Acceder au formulaire de connection">Connexion</a>
+						<a class="button" 
+						   href="<?php echo $this->url('login') ?>" 
+						   title="Accéder au formulaire de connexion">
+							Connexion
+						</a>
 						<?php endif; ?>
 					</li>
 				</ul>
@@ -50,7 +80,7 @@
 		</aside><main>
 
 			<section>
-			    <?php $fmsg->display(); ?>
+				<?php $fmsg->display(); ?>
 				<?= $this->section('main_content') ?>
 			</section>
 		</main>
@@ -62,9 +92,10 @@
 		crossorigin="anonymous"></script>
 		<script type="text/javascript" src="<?php echo $this->assetUrl('js/close-flash-messages.js') ?>"></script>
 		<?php $sectionJavascripts = $this->section('javascripts');
-                if(!empty($sectionJavascripts)) {
-                    echo $sectionJavascripts;
-                }
-        ?>
+			if( ! empty($sectionJavascripts)) {
+				echo $sectionJavascripts;
+			}
+		?>
  	</body>
+
 </html>
