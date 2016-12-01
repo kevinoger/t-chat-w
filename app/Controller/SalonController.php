@@ -60,7 +60,7 @@ class SalonController extends BaseController
 	}
 	
 	public function addSalon() {
-		$this->allowTo('utilisateur','admin','superadmin');
+		$this->allowTo(['utilisateur','admin','superadmin']);
 		if(!empty($_POST['nom'])) {
 			$salonModel = new SalonsModel();
 			$datas = array('nom' => $_POST['nom']);

@@ -100,6 +100,9 @@ class UserController extends BaseController
 			// seront accessibles depuis le namespace Validation\Rules
 			v::with("Validation\Rules");
 			
+			// je déclare mes validateurs pseudo et email à part
+			// car je souhaite effectuer des vérifications supplémentaires
+			// uniquement si l'utilisateur est en mode insertion (pas connecté)
 			$pseudoValidator = v::length(3,50)
 					->alnum()
 					->noWhitespace()
@@ -108,6 +111,9 @@ class UserController extends BaseController
 			$emailValidator = v::email()
 					->setName('Email');
 			
+			// si l'utilisateur n'est pas connecté (mode insertion) 
+			// on ajoute les conditions "l'email ne doit pas déjà exister" et 
+			// "le nom d'utilisateur ne doit pas exister"
 			if( ! $user) {
 				$pseudoValidator->usernameNotExists();
 				$emailValidator->emailNotExists();
@@ -157,7 +163,9 @@ class UserController extends BaseController
 				'length' => '{{name}} doit avoir une longueur comprise entre {{minValue}} et {{maxValue}} caractères',
 				'noWhitespace' => '{{name}} ne doit pas contenir d\'espace vide',
 				'in' => '{{name}} doit être compris dans {{haystack}}',
-				'image' => '{{name}} doit être une image'
+				'image' => '{{name}} doit être une image',
+				'usernameNotExists' => 'Votre {{name}} existe déjà',
+				'emailNotExists' => 'Votre {{name}} existe déjà'
 			);
 			// je parcours la liste de mes validateurs en récupérant aussi le
 			// nom du champ en clé
@@ -214,6 +222,7 @@ class UserController extends BaseController
 				unset($datas['send']);
 				
 				if($user) {
+					// UPDATE utilisateurs SET ... WHERE id = ...
 					$utilisateursModel->update($datas, $user['id']);
 					$auth = new AuthentificationModel();
 					$this->getFlashMessenger()->success('Vous avez bien mis à jour votre profil');
